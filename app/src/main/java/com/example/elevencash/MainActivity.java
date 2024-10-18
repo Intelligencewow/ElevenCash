@@ -23,10 +23,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        ImageButton button = findViewById(R.id.vendaButton);
+        ImageButton vendaButton = findViewById(R.id.vendaButton);
+        ImageButton relatorioButton = findViewById(R.id.relatorioButton);
 
-        button.setOnClickListener(v -> {
+        vendaButton.setOnClickListener(v -> {
             Intent intent = new Intent(this,VendaActivity.class);
+            startActivity(intent);
+        });
+
+        relatorioButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RelatorioActivity.class);
             startActivity(intent);
         });
     }

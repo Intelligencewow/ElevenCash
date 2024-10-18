@@ -38,4 +38,16 @@
         android:src="@drawable/local_activity_24dp_e8eaed_fill0_wght400_grad0_opsz24"/>
 
 
+    <ImageButton
+        android:id="@+id/relatorioButton"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@id/vendaButton"
+        app:layout_constraintTop_toBottomOf="@id/toolbar2"
+        android:src="@drawable/description_24dp_e8eaed_fill0_wght400_grad0_opsz24"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
