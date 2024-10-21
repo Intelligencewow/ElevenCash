@@ -1,9 +1,17 @@
 package com.example.elevencash;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,6 +25,34 @@ public class VendaActivity extends AppCompatActivity {
     private String TAG = "MyActivity";
     private int selectedChipId;
 
+    private final ActivityResultLauncher<Intent> makePaymentLauncher = 
+            registerForActivityResult(new ActivityResultContract<Intent, String>() {
+
+                @NonNull
+                @Override
+                public Intent createIntent(@NonNull Context context, Intent intent) {
+                    Log.i(TAG, "Criou a intent: ");
+                    return intent;
+                }
+
+                @Override
+                public String parseResult(int resultCode, @Nullable Intent intent) {
+                    Log.i(TAG, "Chegou no parseResult ");
+                    if(resultCode == RESULT_OK && intent != null){
+                        return "OK";
+                    }
+                    Log.i(TAG, "result code não foi daora");
+                    return "Not Ok";
+                }
+
+
+
+            }, new ActivityResultCallback<String>() {
+
+                public void onActivityResult(String result){
+                    Log.i(TAG, "onActivityResult: " + result);
+                };
+            });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +69,24 @@ public class VendaActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter);
 
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
+
+        ImageButton buttonVoltar = findViewById(R.id.buttonVoltar);
+        ImageButton buttonDeletar = findViewById(R.id.buttonDeletar);
+        ImageButton buttonDebito = findViewById(R.id.buttonDebito);
+
+
+        buttonVoltar.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        buttonDebito.setOnClickListener(v -> {
+            Intent intent = new Intent("br.com.bencke.pagamento.PAGAMENTO");
+            intent.putExtra("valor", 500);
+            intent.putExtra("forma_pagamento", 1);
+            makePaymentLauncher.launch(intent);
+        });
 
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

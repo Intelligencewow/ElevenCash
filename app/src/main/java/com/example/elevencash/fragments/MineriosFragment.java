@@ -3,58 +3,55 @@ package com.example.elevencash.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.elevencash.Product;
+import com.example.elevencash.ProductAdapter;
 import com.example.elevencash.R;
 
-public class MineriosFragment extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class MineriosFragment extends Fragment implements ProductAdapter.onItemClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MineriosFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MineriosFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MineriosFragment newInstance(String param1, String param2) {
-        MineriosFragment fragment = new MineriosFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private RecyclerView recyclerView;
+    private ProductAdapter productAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_minerios, container, false);
+        View view = inflater.inflate(R.layout.fragment_minerios, container, false);
+        recyclerView = view.findViewById(R.id.mineriosRecyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+
+        ArrayList<Product> productList = new ArrayList<>();
+        productList.add(new Product("Minério de cobre", "10"));
+        productList.add(new Product("Minério de estanho", "15"));
+        productList.add(new Product("Minério de ferro", "20"));
+        productList.add(new Product("Carvão mineral", "20"));
+        productList.add(new Product("Minério de mithril", "20"));
+        productList.add(new Product("Minério de adamantio", "20"));
+
+
+
+
+        productAdapter = new ProductAdapter(getActivity(), productList, this);
+        recyclerView.setAdapter(productAdapter);
+
+        return view;
+    }
+
+    @Override
+    public void onItemClick(String price, int quantity, int choice) {
+
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+
     }
 }

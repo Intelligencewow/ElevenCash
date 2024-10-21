@@ -11,43 +11,102 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/purple">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:text="Eleven Cash"/>
+            android:layout_gravity="center"
+            android:scaleX=".55"
+            android:scaleY=".55"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_eleven_white"/>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageButton
-        android:id="@+id/vendaButton"
-        style="@style/Widget.Material3.Button.IconButton"
+    <LinearLayout
+        android:id="@+id/vendaLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar2"
-        android:src="@drawable/local_activity_24dp_e8eaed_fill0_wght400_grad0_opsz24"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar2">
 
 
-    <ImageButton
-        android:id="@+id/relatorioButton"
-        style="@style/Widget.Material3.Button.IconButton"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/vendaCardView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="15dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="#F0F0F0">
+
+            <ImageButton
+                android:id="@+id/vendaButton"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleY="1.25"
+                android:scaleX="1.25"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icone_menu_fichas_roundless"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar2" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Venda"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/vendaButton"
+        app:layout_constraintStart_toEndOf="@id/vendaLayout"
         app:layout_constraintTop_toBottomOf="@id/toolbar2"
-        android:src="@drawable/description_24dp_e8eaed_fill0_wght400_grad0_opsz24"/>
+        android:orientation="vertical"
+        >
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="15dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="#F0F0F0"
+            android:layout_gravity="center"
+            >
+
+            <ImageButton
+                android:id="@+id/relatorioButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleY="1.25"
+                android:scaleX="1.25"
+                android:scaleType="fitCenter"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:src="@drawable/icone_menu_relatorios_roundless"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Relatório"/>
+
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

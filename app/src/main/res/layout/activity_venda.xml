@@ -5,17 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".VendaActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:background="?attr/colorPrimary"
+        android:background="@color/purple"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,10 +28,11 @@
 
 
             <ImageButton
+                android:id="@+id/buttonVoltar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Button.IconButton"
-                android:src="@drawable/arrow_back_ios_24dp_e8eaed_fill0_wght400_grad0_opsz24"/>
+                android:src="@drawable/icone_voltar"/>
 
 
             <TextView
@@ -44,10 +45,11 @@
                 android:text="VENDA"/>
 
             <ImageButton
+                android:id="@+id/buttonDeletar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Button.IconButton"
-                android:src="@drawable/delete_24dp_e8eaed_fill0_wght400_grad0_opsz24"/>
+                android:src="@drawable/icone_deletar"/>
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -140,7 +142,7 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
@@ -149,6 +151,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/gray">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Venda: "/>
+
+                    <TextView
+                        android:id="@+id/totalValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$25,40 "/>
+                    <TextView
+                        android:id="@+id/totalQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(6 itens)"/>
+
+                </LinearLayout>
 
 
             <LinearLayout
@@ -163,17 +193,17 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/buttonDebito"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         style="@style/Widget.Material3.Button.IconButton"
-                        android:src="@drawable/credit_card_24dp_e8eaed"/>
+                        android:src="@drawable/icone_cartao"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-
                         android:text="Débito"/>
                 </LinearLayout>
 
@@ -189,7 +219,7 @@
                         android:layout_gravity="center"
 
                         style="@style/Widget.Material3.Button.IconButton"
-                        android:src="@drawable/credit_card_24dp_e8eaed"/>
+                        android:src="@drawable/icone_cartao"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -208,15 +238,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-
                         style="@style/Widget.Material3.Button.IconButton"
-                        android:src="@drawable/pix_24dp_e8eaed"/>
+                        android:src="@drawable/icone_pix"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-
                         android:text="Pix" />
                 </LinearLayout>
 
@@ -230,22 +258,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-
                         style="@style/Widget.Material3.Button.IconButton"
-                        android:src="@drawable/paid_24dp_e8eaed"/>
+                        android:src="@drawable/icone_dinheiro"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-
                         android:text="Dinheiro"/>
                 </LinearLayout>
 
 
             </LinearLayout>
 
-
+            </LinearLayout>
         </com.google.android.material.bottomappbar.BottomAppBar>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
