@@ -29,26 +29,26 @@
 
             <ImageButton
                 android:id="@+id/buttonVoltar"
+                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Button.IconButton"
                 android:src="@drawable/icone_voltar"/>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/white"
-                android:text="VENDA"/>
+                android:text="VENDA"
+                android:textColor="@color/white"/>
 
             <ImageButton
                 android:id="@+id/buttonDeletar"
+                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Button.IconButton"
                 android:src="@drawable/icone_deletar"/>
 
         </LinearLayout>
@@ -59,12 +59,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
+        app:checkedChip="@id/chipLenhas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:singleSelection="true"
         app:selectionRequired="true"
-        app:checkedChip="@id/chipLenhas">
+        app:singleSelection="true">
 
 
         <com.google.android.material.chip.Chip
@@ -72,11 +72,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:chipCornerRadius="15dp"
-            app:chipBackgroundColor="@color/chip_background_color"
-            android:textColor="@color/chip_text_color"
-            android:text="Lenhas"
             android:checkable="true"
+            android:text="Lenhas"
+            android:textColor="@color/chip_text_color"
+            app:chipBackgroundColor="@color/chip_background_color"
+            app:chipCornerRadius="15dp"
             app:chipStrokeColor="@color/purple"/>
 
         <com.google.android.material.chip.Chip
@@ -84,36 +84,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:chipBackgroundColor="@color/chip_background_color"
-            android:textColor="@color/chip_text_color"
-            app:chipStrokeColor="@color/purple"
-            app:chipCornerRadius="15dp"
+            android:checkable="true"
             android:text="Minérios"
-            android:checkable="true"/>
+            android:textColor="@color/chip_text_color"
+            app:chipBackgroundColor="@color/chip_background_color"
+            app:chipCornerRadius="15dp"
+            app:chipStrokeColor="@color/purple"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipPeixes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:chipCornerRadius="15dp"
-            app:chipStrokeColor="@color/purple"
+            android:checkable="true"
+            android:text="Peixes"
             android:textColor="@color/chip_text_color"
             app:chipBackgroundColor="@color/chip_background_color"
-            android:text="Peixes"
-            android:checkable="true"/>
+            app:chipCornerRadius="15dp"
+            app:chipStrokeColor="@color/purple"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipRunas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:chipCornerRadius="15dp"
-            app:chipStrokeColor="@color/purple"
+            android:checkable="true"
+            android:text="Runas"
             android:textColor="@color/chip_text_color"
             app:chipBackgroundColor="@color/chip_background_color"
-            android:text="Runas"
-            android:checkable="true"/>
+            app:chipCornerRadius="15dp"
+            app:chipStrokeColor="@color/purple"/>
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -134,10 +134,10 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
+        android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/gray">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
@@ -147,16 +147,17 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="7dp"
+            android:backgroundTint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="@color/gray">
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <LinearLayout
+                    android:id="@+id/totalVendas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -171,7 +172,8 @@
                         android:id="@+id/totalValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$25,40 "/>
+                        android:layout_marginEnd="5dp"
+                        android:text="$25,40     "/>
                     <TextView
                         android:id="@+id/totalQuantity"
                         android:layout_width="wrap_content"
@@ -189,15 +191,15 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/buttonDebito"
+                        style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        style="@style/Widget.Material3.Button.IconButton"
                         android:src="@drawable/icone_cartao"/>
 
                     <TextView
@@ -210,15 +212,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/buttonCredito"
+                        style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
 
-                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_gravity="center"
                         android:src="@drawable/icone_cartao"/>
 
                     <TextView
@@ -231,14 +234,15 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/buttonPix"
+                        style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        style="@style/Widget.Material3.Button.IconButton"
                         android:src="@drawable/icone_pix"/>
 
                     <TextView
@@ -251,14 +255,14 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageButton
+                        style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        style="@style/Widget.Material3.Button.IconButton"
                         android:src="@drawable/icone_dinheiro"/>
 
                     <TextView

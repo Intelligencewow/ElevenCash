@@ -1,15 +1,15 @@
 package com.example.elevencash.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.example.elevencash.Carrinho;
 import com.example.elevencash.Product;
 import com.example.elevencash.ProductAdapter;
 import com.example.elevencash.R;
@@ -17,7 +17,8 @@ import com.example.elevencash.R;
 import java.util.ArrayList;
 
 
-public class RunasFragment extends Fragment implements ProductAdapter.onItemClickListener{
+public class RunasFragment extends Fragment implements ProductAdapter.onItemClickListener, Carrinho.CarrinhoListener {
+    private Carrinho carrinho = Carrinho.getINSTANCE();
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
 
@@ -39,7 +40,7 @@ public class RunasFragment extends Fragment implements ProductAdapter.onItemClic
         productList.add(new Product("Runa do fogo", "20"));
         productList.add(new Product("Runa corporal", "20"));
 
-
+        carrinho.addListener(this);
 
 
         productAdapter = new ProductAdapter(getActivity(), productList, this);
@@ -55,5 +56,15 @@ public class RunasFragment extends Fragment implements ProductAdapter.onItemClic
     @Override
     public void onItemLongClick(int position) {
 
+    }
+
+    @Override
+    public void onTotalQuantityChanged(int totalQuantity, double value) {
+
+    }
+
+    @Override
+    public void onClearCarrinho() {
+        productAdapter.clearCarrinho();
     }
 }
