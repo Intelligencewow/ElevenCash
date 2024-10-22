@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.elevencash.Carrinho;
-import com.example.elevencash.Product;
-import com.example.elevencash.ProductAdapter;
+import com.example.elevencash.productTable.Product;
+import com.example.elevencash.productTable.ProductAdapter;
+import com.example.elevencash.productTable.ProductViewModel;
 import com.example.elevencash.R;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class PeixesFragment extends Fragment implements ProductAdapter.onItemCli
     Carrinho carrinho = Carrinho.getINSTANCE();
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
+    ProductViewModel productViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,20 +33,23 @@ public class PeixesFragment extends Fragment implements ProductAdapter.onItemCli
 
         recyclerView = view.findViewById(R.id.peixesRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
 
         ArrayList<Product> productList = new ArrayList<>();
-        productList.add(new Product("Camarão", "10"));
-        productList.add(new Product("Lagostim", "15"));
-        productList.add(new Product("Vairão", "20"));
-        productList.add(new Product("Karambwanji", "20"));
-        productList.add(new Product("Sardinha", "20"));
-        productList.add(new Product("Arenque", "20"));
+
         carrinho.addListener(this);
 
-
+        populateTable();
 
         productAdapter = new ProductAdapter(getActivity(), productList, this);
         recyclerView.setAdapter(productAdapter);
+
+        productViewModel.getProductsByCategory("fish").observe(getViewLifecycleOwner(), products -> {
+
+            productAdapter.setProductList(products);
+
+        });
+
         return  view;
     }
 
@@ -66,5 +72,11 @@ public class PeixesFragment extends Fragment implements ProductAdapter.onItemCli
     @Override
     public void onClearCarrinho() {
         productAdapter.clearCarrinho();
+    }
+
+    public void populateTable(){
+        productViewModel.insert(new Product("Camarão", "15.90", "fish", "https://runescape.wiki/images/thumb/Shrimps_detail.png/200px-Shrimps_detail.png?d476b"));
+        productViewModel.insert(new Product("Lagostim", "32", "fish", "https://runescape.wiki/images/thumb/Crayfish_detail.png/200px-Crayfish_detail.png?3794c"));
+        productViewModel.insert(new Product("Vairão", "123.25", "fish", "https://runescape.wiki/images/thumb/Minnow_detail.png/200px-Minnow_detail.png?a145b"));
     }
 }

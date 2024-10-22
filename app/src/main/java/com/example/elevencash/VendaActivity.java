@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -31,6 +33,13 @@ import java.util.Locale;
 public class VendaActivity extends AppCompatActivity implements Carrinho.CarrinhoListener{
     LinearLayout totalVendas;
     private String TAG = "MyActivity";
+
+    private final ActivityResultLauncher<Intent> makePaymentLaunchee = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result ->{
+        if (result.getResultCode() == RESULT_OK){
+            Log.i(TAG, "DEu certo: ");
+        }
+            });
     private final ActivityResultLauncher<Intent> makePaymentLauncher =
             registerForActivityResult(new ActivityResultContract<Intent, String>() {
 
@@ -43,8 +52,9 @@ public class VendaActivity extends AppCompatActivity implements Carrinho.Carrinh
 
                 @Override
                 public String parseResult(int resultCode, @Nullable Intent intent) {
-                    Log.i(TAG, "Chegou no parseResult " + resultCode);
+
                     if(resultCode == RESULT_OK && intent != null){
+                        Log.i(TAG, "result code foi daora");
                         return "OK";
                     }
                     Log.i(TAG, "result code não foi daora");
@@ -55,7 +65,11 @@ public class VendaActivity extends AppCompatActivity implements Carrinho.Carrinh
             }, new ActivityResultCallback<String>() {
 
                 public void onActivityResult(String result){
-                    Log.i(TAG, "onActivityResult: " + result);
+                    if (result.equals("OK")){
+                        Intent intent = new Intent(VendaActivity.this, SucessoActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 };
             });
     private TextView tvtotalQuantity;
@@ -116,6 +130,7 @@ public class VendaActivity extends AppCompatActivity implements Carrinho.Carrinh
             Intent intent = new Intent("br.com.bencke.pagamento.PAGAMENTO");
             intent.putExtra("valor", Carrinho.getTotalValueCents());
             intent.putExtra("forma_pagamento", 3);
+            Log.i(TAG, "Fomos de pix: ");
             makePaymentLauncher.launch(intent);
         });
 

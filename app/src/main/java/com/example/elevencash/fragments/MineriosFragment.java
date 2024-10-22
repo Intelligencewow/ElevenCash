@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.elevencash.Carrinho;
-import com.example.elevencash.Product;
-import com.example.elevencash.ProductAdapter;
+import com.example.elevencash.productTable.Product;
+import com.example.elevencash.productTable.ProductAdapter;
+import com.example.elevencash.productTable.ProductViewModel;
 import com.example.elevencash.R;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class MineriosFragment extends Fragment implements ProductAdapter.onItemC
     Carrinho carrinho = Carrinho.getINSTANCE();
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
+    ProductViewModel productViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,17 +31,20 @@ public class MineriosFragment extends Fragment implements ProductAdapter.onItemC
         recyclerView = view.findViewById(R.id.mineriosRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
-        ArrayList<Product> productList = new ArrayList<>();
-        productList.add(new Product("Minério de cobre", "10"));
-        productList.add(new Product("Minério de estanho", "15"));
-        productList.add(new Product("Minério de ferro", "20"));
-        productList.add(new Product("Carvão mineral", "20"));
-        productList.add(new Product("Minério de mithril", "20"));
-        productList.add(new Product("Minério de adamantio", "20"));
-
-
         carrinho.addListener(this);
+        
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
 
+
+
+        populateTable();
+        productViewModel.getProductsByCategory("ores").observe(getViewLifecycleOwner(), products -> {
+
+            productAdapter.setProductList(products);
+
+        });
+
+        ArrayList<Product> productList = new ArrayList<>();
         productAdapter = new ProductAdapter(getActivity(), productList, this);
         recyclerView.setAdapter(productAdapter);
 
@@ -65,5 +71,14 @@ public class MineriosFragment extends Fragment implements ProductAdapter.onItemC
 
         productAdapter.clearCarrinho();
 
+    }
+
+    public void populateTable(){
+        productViewModel.insert(new Product("Minério de cobre", "777.90", "ores", "https://runescape.wiki/images/Copper_ore_detail.png?2c4f9"));
+        productViewModel.insert(new Product("Minério de estanho", "752", "ores", "https://runescape.wiki/images/thumb/Tin_ore_detail.png/242px-Tin_ore_detail.png?82a5a"));
+        productViewModel.insert(new Product("Minério de ferro", "135.25", "ores", "https://runescape.wiki/images/thumb/Iron_ore_detail.png/200px-Iron_ore_detail.png?2d6f5"));
+        productViewModel.insert(new Product("Carvão mineral", "89.99", "ores", "https://runescape.wiki/images/thumb/Coal_detail.png/200px-Coal_detail.png?332f3"));
+        productViewModel.insert(new Product("Minério de mithril", "499.90", "ores", "https://runescape.wiki/images/thumb/Mithril_ore_detail.png/200px-Mithril_ore_detail.png?2d6f5"));
+        productViewModel.insert(new Product("Luminita", "2605", "ores", "https://runescape.wiki/images/thumb/Luminite_detail.png/200px-Luminite_detail.png?2d6f5"));
     }
 }

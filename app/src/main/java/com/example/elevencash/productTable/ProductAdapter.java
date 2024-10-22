@@ -1,4 +1,4 @@
-package com.example.elevencash;
+package com.example.elevencash.productTable;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,11 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.elevencash.Carrinho;
+import com.example.elevencash.CarrinhoItem;
+import com.example.elevencash.R;
 import com.google.android.material.card.MaterialCardView;
 
 import java.text.NumberFormat;
@@ -40,9 +45,19 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ProductViewHolder holder, int position) {
         Product product = productList.get(position);
+        Log.i("MyActivity", "onBindViewHolder: " + product.getId());
+        CarrinhoItem carrinhoItem = carrinho.getProductByItem(product.getId());
+
         Log.i("MyActivity", "Quantidade de produtos no carrinho: " + product.getQuantity());
         holder.productName.setText(product.getName());
-        holder.quantity.setText(product.getQuantityString());
+
+        if (carrinhoItem != null){
+            holder.quantity.setText(String.valueOf(carrinhoItem.getQuantity()));
+
+        } else{
+            holder.quantity.setText("0");
+
+        }
         double price = Double.parseDouble(product.getPrice());
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
         String formattedPrice = currencyFormat.format(price)
@@ -51,10 +66,20 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
                 .replace("TEMP", ".");
         holder.productPrice.setText(formattedPrice);
 
+        String imageUrl = product.getImageUrl();
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(context)
+                    .load(imageUrl)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(holder.imageView);
+        }
+
+
+
         holder.buttonIncrease.setOnClickListener(v -> {
             Log.i("MyActivity", "Clicou no botão: ");
-            product.increaseQuantity();
-            carrinho.increaseTotalQuantity(1, price);
+            carrinho.addProduct(product,1);
             notifyItemChanged(position);
             if(listener != null){
                 listener.onItemClick(product.getPrice(), product.getQuantity(), 1);
@@ -62,23 +87,28 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
         });
 
         holder.buttonDecrease.setOnClickListener(v -> {
-            if (product.getQuantity() > 0) {
-                product.decreaseQuantity();
-                carrinho.decreaseTotalQuantity(1, price);
+                carrinho.decreaseProductQuantity(product, 1);
                 notifyItemChanged(position);
                 if (listener != null) {
                     listener.onItemClick(product.getPrice(), product.getQuantity(), 0);
                 }
-            }
         });
 
-        if (product.getQuantity() > 0){
-            holder.cardView.setStrokeColor(Color.parseColor("#572C88"));
-            holder.cardView.setStrokeWidth(2);
+
+        if (carrinhoItem != null){
+            if (carrinhoItem.getQuantity() > 0) {
+                holder.cardView.setStrokeColor(Color.parseColor("#572C88"));
+                holder.cardView.setStrokeWidth(2);
+            }
         } else{
             holder.cardView.setStrokeWidth(0);
         }
 
+    }
+
+    public void setProductList(List<Product> productList){
+        this.productList = productList;
+        notifyDataSetChanged();
     }
 
     public void clearCarrinho(){
@@ -109,6 +139,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
         public TextView productName;
         public TextView productPrice;
         public TextView quantity;
+        public ImageView imageView;
         public ImageButton buttonIncrease;
         public ImageButton buttonDecrease;
         public MaterialCardView cardView;
@@ -118,6 +149,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
             quantity = itemView.findViewById(R.id.quantity);
+            imageView = itemView.findViewById(R.id.product_image);
             buttonIncrease = itemView.findViewById(R.id.button_increase);
             buttonDecrease = itemView.findViewById(R.id.button_decrease);
             cardView = itemView.findViewById(R.id.cardView);
